@@ -110,8 +110,10 @@
     .panel__head { height: 44px; padding-inline: 16px; background: var(--yellow); display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 800; line-height: normal; }
     .panel__head img { width: 10px; height: 10px; }
     .panel__body { padding: 20px; font-size: 15px; line-height: 1.5; color: var(--sub); }
-    /* 82:2079 / 82:2080 — 178 + 3 + 158 */
-    .schedule { display: grid; grid-template-columns: minmax(0, 178px) minmax(0, 158px); column-gap: 3px; }
+    /* 82:2079 / 82:2080 — 날짜 178 + 내용 158, 좁은 화면에서도 행 단위로 정렬 */
+    .schedule { display: grid; grid-template-columns: auto minmax(0, 158px); column-gap: 12px; }
+    .schedule dt { white-space: nowrap; }
+    .schedule dd { margin: 0; }
     .notes { padding: 0; list-style: disc; }
     .notes li { margin-inline-start: 22.5px; }
 
@@ -190,10 +192,11 @@
         <div class="panel">
           <div class="panel__head" style="color:#1a3049">일정<img src="/assets/dot.svg" alt=""></div>
           <div class="panel__body">
-            <div class="schedule">
-              <p>9월 24일(목)~9월 27일(일)<br>9월 30일(수)~10월 7일(수)<br>10월 둘째 주</p>
-              <p>매치 진행<br>당첨자 안내 · 배송지 접수<br>선물 발송</p>
-            </div>
+            <dl class="schedule">
+              <dt>9월 24일(목)~9월 27일(일)</dt><dd>매치 진행</dd>
+              <dt>9월 30일(수)~10월 7일(수)</dt><dd>당첨자 안내 · 배송지 접수</dd>
+              <dt>10월 둘째 주</dt><dd>선물 발송</dd>
+            </dl>
           </div>
         </div>
       </div>
