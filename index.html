@@ -112,8 +112,8 @@
     .panel__body { padding: 20px 16px; font-size: 15px; line-height: 1.5; color: var(--sub); }
     /* 82:2087 — ul left 7 / top 19 */
     .panel__body--notes { padding: 19px 9px 20px 7px; }
-    /* 82:2079 / 82:2080 — 날짜 178 + 내용 158, 좁은 화면에서도 행 단위로 정렬 */
-    .schedule { display: grid; grid-template-columns: auto minmax(0, 158px); column-gap: 12px; }
+    /* 82:2079 / 82:2080 — 날짜 178 + 간격 33 + 내용 129, 좁은 화면에서도 행 단위로 정렬 */
+    .schedule { display: grid; grid-template-columns: auto minmax(0, 129px); column-gap: clamp(12px, 8vw, 33px); }
     .schedule dt { white-space: nowrap; }
     .schedule dd { margin: 0; }
     .notes { padding: 0; list-style: disc; }
@@ -122,6 +122,8 @@
     .cta { display: flex; flex-direction: column; align-items: center; gap: 20px; padding-inline: 20px; text-align: center; font-family: var(--gothic); }
     .cta .eyebrow { font-size: 16px; font-weight: 700; }
     .cta__title { font-size: 23px; font-weight: 900; line-height: normal; }
+    /* 87:2129 */
+    .cta__note { font-family: var(--pretendard); font-size: 15px; line-height: 1.5; color: #fff; }
     .cta__buttons { width: 100%; padding-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .btn { height: 44px; border-radius: 22px; display: flex; align-items: center; justify-content: center; white-space: nowrap; line-height: normal; transition: filter .15s, transform .15s; }
     .btn:hover { filter: brightness(1.08); }
@@ -196,7 +198,7 @@
           <div class="panel__body">
             <dl class="schedule">
               <dt>9월 24일(목)~9월 27일(일)</dt><dd>매치 진행</dd>
-              <dt>9월 30일(수)~10월 7일(수)</dt><dd>당첨자 안내 · 배송지 접수</dd>
+              <dt>9월 30일(수)~10월 7일(수)</dt><dd>당첨자 안내</dd>
               <dt>10월 둘째 주</dt><dd>선물 발송</dd>
             </dl>
           </div>
@@ -213,7 +215,7 @@
               <li>STAGE별 중복 당첨은 없어요.</li>
               <li>모든 선물은 FREE 사이즈예요.</li>
               <li>당첨 결과는 당첨자에게 개별 안내해요.</li>
-              <li>이벤트 소식을 받아보려면 [마이페이지] - [설정]에서 푸시를 켜주세요.</li>
+              <li>이벤트 소식을 받아보려면 [마이페이지]-[설정]에서 푸시를 켜주세요.</li>
               <li>당첨 안내 후 정해진 기간 내에 배송지를 제출해 주세요. 제출 기간이 지나면 당첨이 취소돼요.</li>
             </ul>
           </div>
@@ -227,6 +229,7 @@
       <div class="cta">
         <p class="eyebrow">추석 연휴에도</p>
         <h2 class="cta__title">내가 원할 때,<br>원하는 구장에서<br>만드는 나만의 수입</h2>
+        <p class="cta__note">매치는 일주일 전부터 하루 전까지 추가돼요.<br>지금 원하는 일정이 없어도 매치가 더 열릴 수 있어요!</p>
         <div class="cta__buttons">
           <a class="btn btn--ghost" href="https://www.plabfootball.com/" target="_blank" rel="noopener">플랩풋볼 바로가기</a>
           <a class="btn btn--primary" href="https://plabmanager.onelink.me/FhFk/pxnzldrc" target="_blank" rel="noopener">↗ 연휴 매치 잡으러 가기</a>
