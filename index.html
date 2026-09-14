@@ -109,7 +109,9 @@
     .panel { background: var(--panel); border: 2px solid var(--panel-line); border-radius: 16px; overflow: hidden; }
     .panel__head { height: 44px; padding-inline: 16px; background: var(--yellow); display: flex; align-items: center; justify-content: space-between; font-size: 15px; font-weight: 800; line-height: normal; }
     .panel__head img { width: 10px; height: 10px; }
-    .panel__body { padding: 20px; font-size: 15px; line-height: 1.5; color: var(--sub); }
+    .panel__body { padding: 20px 16px; font-size: 15px; line-height: 1.5; color: var(--sub); }
+    /* 82:2087 — ul left 7 / top 19 */
+    .panel__body--notes { padding: 19px 9px 20px 7px; }
     /* 82:2079 / 82:2080 — 날짜 178 + 내용 158, 좁은 화면에서도 행 단위로 정렬 */
     .schedule { display: grid; grid-template-columns: auto minmax(0, 158px); column-gap: 12px; }
     .schedule dt { white-space: nowrap; }
@@ -204,15 +206,15 @@
       <div class="inset">
         <div class="panel">
           <div class="panel__head" style="color:#0a1a2d">참고해 주세요<img src="/assets/dot.svg" alt=""></div>
-          <div class="panel__body">
+          <div class="panel__body panel__body--notes">
             <ul class="notes">
-              <li>진행 매치가 2매치 이상이면 자동으로 응모됩니다.</li>
-              <li>진행이 완료된 매치만 집계되며, 취소된 매치는 포함되지 않습니다.</li>
-              <li>STAGE별 중복 선정은 없습니다.</li>
-              <li>모든 굿즈는 FREE 사이즈입니다.</li>
-              <li>당첨 안내는 당첨자에게 개별적으로 안내돼요.</li>
-              <li>푸시를 켜놓으면 이벤트 진행 관련 내용을 받아볼 수 있어요. [마이페이지] - [설정]에서 푸시를 켜주세요.</li>
-              <li>당첨 안내 후 기간 내 배송지를 남기지 않으면 당첨 해제 됩니다.</li>
+              <li>기간 내 일정 매치 수 이상 진행하면 이벤트에 자동으로 응모됩니다.</li>
+              <li>진행 완료된 매치만 집계되며, 취소된 매치는 포함되지 않아요.</li>
+              <li>STAGE별 중복 당첨은 없어요.</li>
+              <li>모든 선물은 FREE 사이즈예요.</li>
+              <li>당첨 결과는 당첨자에게 개별 안내해요.</li>
+              <li>이벤트 소식을 받아보려면 [마이페이지] - [설정]에서 푸시를 켜주세요.</li>
+              <li>당첨 안내 후 정해진 기간 내에 배송지를 제출해 주세요. 제출 기간이 지나면 당첨이 취소돼요.</li>
             </ul>
           </div>
         </div>
