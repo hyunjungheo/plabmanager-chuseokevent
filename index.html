@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>추석 원정대 | 플랩매니저</title>
+  <meta name="description" content="1년 중 그라운드가 가장 붐비는 추석 연휴, 매치 진행하고 플랩이 드리는 선물 받아 가세요!">
+  <meta name="theme-color" content="#0a1a2d">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="2026 추석 원정대">
+  <meta property="og:description" content="9월 24일(목) ~ 9월 27일(일) 매치 진행하면 이벤트 자동 응모">
+  <meta property="og:image" content="/assets/hero.webp">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;800;900&family=Outfit:wght@700&display=swap">
+  <style>
+    :root {
+      --bg: #0a1a2d;
+      --card: #101d30;
+      --card-line: #1c2e45;
+      --panel: #142640;
+      --panel-line: #1e3550;
+      --yellow: #ffdc44;
+      --sub: #b8c4d4;
+      --desc: #e2e8f0;
+      --brown: #3d2b1f;
+      --pretendard: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+      --gothic: "Gothic A1", var(--pretendard);
+      --outfit: Outfit, var(--pretendard);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: #fff; }
+    body { font-family: var(--pretendard); -webkit-font-smoothing: antialiased; word-break: keep-all; }
+    p, ul, h1, h2 { margin: 0; }
+    img { display: block; max-width: none; }
+    a { color: inherit; text-decoration: none; }
+
+    /* 39:713 — 402px 컬럼, 세로 gap 24 */
+    .page {
+      position: relative;
+      max-width: 466px;
+      margin: 0 auto;
+      padding: 72px 16px calc(48px + env(safe-area-inset-bottom));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      overflow: hidden;
+    }
+    @media (min-width: 466px) { .page { padding-inline: 32px; } }
+
+    /* 히어로 배경 58:2 / 60:2 / 60:3 */
+    .hero-bg { position: absolute; top: 0; left: 0; right: 0; height: 561px; pointer-events: none; }
+    .hero-bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+    .hero-bg::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,26,45,.3) 0%, rgba(10,26,45,.1) 30%, rgba(10,26,45,.5) 65%, rgba(10,26,45,.85) 85%, #0a1a2d 100%); z-index: 1; }
+    .hero-bg::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 200px; background: linear-gradient(180deg, rgba(10,26,45,.6) 0%, rgba(10,26,45,.2) 50%, rgba(10,26,45,0) 100%); z-index: 1; }
+    .page > :not(.hero-bg) { position: relative; }
+
+    /* 39:714 */
+    .brand { display: flex; flex-direction: column; align-items: center; gap: 6px; height: 88px; white-space: nowrap; line-height: normal; }
+    .brand__eyebrow { font-weight: 700; font-size: 15px; color: var(--sub); }
+    .brand__title { font-weight: 900; font-size: 61px; line-height: 1.1; }
+    .hero-desc { font-size: 15px; line-height: 1.6; color: var(--desc); text-align: center; }
+    .hero-space { height: 370px; flex: none; }
+
+    /* 40:856 / 39:732 */
+    .summary { width: 100%; display: grid; grid-template-columns: 1fr 24px 1fr; column-gap: 12px; row-gap: 24px; text-align: center; font-weight: 700; line-height: 1.4; }
+    .summary__label { font-size: 15px; color: var(--sub); }
+    .summary__value { font-size: 18px; }
+    .chevron { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+    .chevron img { width: 14px; height: 8px; }
+
+    /* 40:867 divider */
+    .divider { width: 100%; height: 12px; padding-inline: 16px; display: flex; align-items: center; }
+    .divider__cap { width: 10px; height: 1px; flex: none; }
+    .divider__dash { flex: 1 0 0; min-width: 1px; height: 1px; }
+
+    /* 39:744 challenge cards */
+    .cards { width: 100%; padding-top: 49px; padding-bottom: 36px; display: flex; flex-direction: column; gap: 31px; }
+    .card { background: var(--card); border: 1px solid var(--card-line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+    .card--first { padding: 18px; }
+    .card__head { display: flex; align-items: center; gap: 8px; min-height: 22px; }
+    .chip { flex: none; background: var(--yellow); color: #fff; font-family: var(--outfit); font-weight: 700; font-size: 11px; line-height: normal; padding: 4px 8px; border-radius: 6px; white-space: nowrap; }
+    .card__name { flex: 1 1 auto; font-size: 18px; font-weight: 800; line-height: normal; }
+    .card__count { flex: none; font-size: 18px; font-weight: 800; line-height: normal; white-space: nowrap; }
+    .card--black .card__name, .card--black .card__count { font-weight: 900; }
+    .card__img { position: relative; width: 100%; border-radius: 12px; overflow: hidden; }
+    .card__img img { position: absolute; left: 0; width: 100%; }
+    /* 82:2120 — 370x200, cover */
+    .card__img--s1 { aspect-ratio: 370 / 200; }
+    .card__img--s1 img { top: 0; height: 100%; object-fit: cover; }
+    /* 82:2051 — 370x200, w 100.18% / h 139% / left -0.09% / top -17% */
+    .card__img--s2 { aspect-ratio: 370 / 200; }
+    .card__img--s2 img { left: -0.09%; top: -17%; width: 100.18%; height: 139%; }
+    /* 82:2061 — 370x212, h 130.9% / top -21.34% */
+    .card__img--s3 { aspect-ratio: 370 / 212; }
+    .card__img--s3 img { top: -21.34%; height: 130.9%; }
+    .card__desc { font-size: 17px; line-height: 1.5; text-align: center; }
+
+    /* 39:798 */
+    .details { width: 100%; padding-block: 20px; display: flex; flex-direction: column; gap: 32px; }
+    .heading { display: flex; flex-direction: column; align-items: center; gap: 20px; padding-inline: 20px; text-align: center; }
+    .eyebrow { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--yellow); font-size: 12px; font-weight: 700; line-height: normal; white-space: nowrap; }
+    .eyebrow::before { content: ""; width: 14px; height: 14px; }
+    .heading__title { font-size: 26px; font-weight: 900; line-height: normal; }
+
+    .inset { padding-inline: min(20px, 3vw); }
+    .panel { background: var(--panel); border: 2px solid var(--panel-line); border-radius: 16px; overflow: hidden; }
+    .panel__head { height: 44px; padding-inline: 16px; background: var(--yellow); display: flex; align-items: center; justify-content: space-between; font-size: 14px; font-weight: 800; line-height: normal; }
+    .panel__head img { width: 10px; height: 10px; }
+    .panel__body { padding: 20px; font-size: 12px; line-height: 1.5; color: var(--sub); }
+    .schedule { display: grid; grid-template-columns: minmax(0, 166px) minmax(0, 146px); column-gap: 12px; }
+    .notes { padding: 0; list-style: disc; }
+    .notes li { margin-inline-start: 18px; }
+
+    .cta { display: flex; flex-direction: column; align-items: center; gap: 20px; padding-inline: 20px; text-align: center; font-family: var(--gothic); }
+    .cta .eyebrow { font-size: 16px; font-weight: 700; }
+    .cta__title { font-size: 23px; font-weight: 900; line-height: normal; }
+    .cta__buttons { width: 100%; padding-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .btn { height: 44px; border-radius: 22px; display: flex; align-items: center; justify-content: center; color: #fff; white-space: nowrap; line-height: normal; transition: filter .15s, transform .15s; }
+    .btn:hover { filter: brightness(1.08); }
+    .btn:active { transform: scale(.97); }
+    .btn--ghost { flex: 0 1 153px; background: var(--brown); font-size: 13px; font-weight: 700; }
+    .btn--primary { flex: 0 1 194px; background: var(--yellow); font-size: 14px; font-weight: 800; }
+    @media (max-width: 374px) { .btn--ghost { font-size: 12px; } .btn--primary { font-size: 13px; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="hero-bg" aria-hidden="true"><img src="/assets/hero.webp" alt="" fetchpriority="high"></div>
+
+    <header class="brand">
+      <p class="brand__eyebrow">2026 추석</p>
+      <h1 class="brand__title">추석 원정대</h1>
+    </header>
+    <p class="hero-desc">1년 중 그라운드가 가장 붐비는 추석 연휴,<br>매치 진행하고 플랩이 드리는 선물 받아 가세요!</p>
+    <div class="hero-space" aria-hidden="true"></div>
+
+    <section class="summary" aria-label="이벤트 요약">
+      <p class="summary__label">대상 기간</p>
+      <span class="chevron" aria-hidden="true"><img src="/assets/chevrons-down.svg" alt=""></span>
+      <p class="summary__label">대상</p>
+      <p class="summary__value">9월 24일(목)<br>~ 9월 27일(일)</p>
+      <span class="chevron" aria-hidden="true"><img src="/assets/chevrons-down.svg" alt=""></span>
+      <p class="summary__value">일정 매치 수 이상<br>진행한 플랩매니저</p>
+    </section>
+
+    <div class="divider" aria-hidden="true">
+      <img class="divider__cap" src="/assets/line-cap.svg" alt=""><img class="divider__dash" src="/assets/line-dash.png" alt=""><img class="divider__dash" src="/assets/line-dash.png" alt=""><img class="divider__cap" src="/assets/line-cap.svg" alt="">
+    </div>
+
+    <section class="cards" aria-label="단계별 선물">
+      <article class="card card--first">
+        <div class="card__head">
+          <span class="chip">STAGE 01</span>
+          <h2 class="card__name">원정 대원</h2>
+          <span class="card__count">24명 추첨</span>
+        </div>
+        <div class="card__img card__img--s1"><img src="/assets/stage1.webp" alt="플랩 크루 삭스" loading="lazy"></div>
+        <p class="card__desc">플랩 크루 삭스 · 2매치 이상 진행</p>
+      </article>
+
+      <article class="card card--black">
+        <div class="card__head">
+          <span class="chip">STAGE 02</span>
+          <h2 class="card__name">원정 베테랑</h2>
+          <span class="card__count">16명 추첨</span>
+        </div>
+        <div class="card__img card__img--s2"><img src="/assets/stage2.webp" alt="플랩 캡" loading="lazy"></div>
+        <p class="card__desc">플랩 캡 · 6매치 이상 진행</p>
+      </article>
+
+      <article class="card card--black">
+        <div class="card__head">
+          <span class="chip">STAGE 03</span>
+          <h2 class="card__name">원정 대장</h2>
+          <span class="card__count">상위 4명</span>
+        </div>
+        <div class="card__img card__img--s3"><img src="/assets/stage3.webp" alt="플랩 공 FYF ARIRANG" loading="lazy"></div>
+        <p class="card__desc">플랩 공(FYF ARIRANG) · 10매치 이상 진행</p>
+      </article>
+    </section>
+
+    <section class="details">
+      <div class="heading">
+        <p class="eyebrow">참여 방법</p>
+        <h2 class="heading__title">기간 내 매치 진행하면<br>이벤트 자동 응모</h2>
+        <p class="eyebrow">세부 내용</p>
+      </div>
+
+      <div class="inset">
+        <div class="panel">
+          <div class="panel__head" style="color:#1a3049">일정<img src="/assets/dot.svg" alt=""></div>
+          <div class="panel__body">
+            <div class="schedule">
+              <p>9월 24일(목)~9월 27일(일)<br>9월 30일(수)~10월 7일(수)<br>10월 둘째 주</p>
+              <p>매치 진행<br>당첨자 안내 · 배송지 접수<br>선물 발송</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="inset">
+        <div class="panel">
+          <div class="panel__head" style="color:#0a1a2d">참고해 주세요<img src="/assets/dot.svg" alt=""></div>
+          <div class="panel__body">
+            <ul class="notes">
+              <li>진행 매치가 2매치 이상이면 자동으로 응모됩니다.</li>
+              <li>진행이 완료된 매치만 집계되며, 취소된 매치는 포함되지 않아요.</li>
+              <li>STAGE별 중복 선정은 없습니다.</li>
+              <li>모든 굿즈는 FREE 사이즈입니다.</li>
+              <li>당첨 안내는 당첨자에게 개별적으로 안내돼요.</li>
+              <li>푸시를 켜놓으면 이벤트 진행 관련 내용을 받아볼 수 있어요.</li>
+              <li>당첨 안내 후 기간 내 배송지를 남기지 않으면 당첨 해제 됩니다.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider" aria-hidden="true">
+        <img class="divider__cap" src="/assets/line-cap.svg" alt=""><img class="divider__dash" src="/assets/line-dash.png" alt=""><img class="divider__dash" src="/assets/line-dash.png" alt=""><img class="divider__cap" src="/assets/line-cap.svg" alt="">
+      </div>
+
+      <div class="cta">
+        <p class="eyebrow">추석 연휴에도</p>
+        <h2 class="cta__title">내가 원할 때,<br>원하는 구장에서<br>만드는 나만의 수입</h2>
+        <div class="cta__buttons">
+          <a class="btn btn--ghost" href="https://plabfootball.com" target="_blank" rel="noopener">플랩풋볼 바로가기</a>
+          <a class="btn btn--primary" href="https://manager.plabfootball.com" target="_blank" rel="noopener">↗ 연휴 매치 잡으러 가기</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
