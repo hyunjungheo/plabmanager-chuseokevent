@@ -29,6 +29,6 @@ Figma `추석원정대_FINAL`(CVogee0nC4LpZLpK0xQM4S, node 82:2002) 기준으로
 | `chevrons-down.svg`, `dot.svg`, `line-cap.svg`, `line-dash.png` | 아이콘·구분선 | — |
 
 ## 링크
-- 연휴 매치 선택하러 가기 → `https://abr.ge/@plabmanager/airpage` (플랩매니저 앱 Airbridge 링크)
+- 연휴 매치 선택하러 가기 → `https://plabmanager.onelink.me/FhFk/pxnzldrc` (플랩매니저 앱 AppsFlyer OneLink)
 
 버튼은 하나입니다. Figma 82:2098 기준으로 "플랩풋볼 바로가기" 버튼은 삭제됐습니다.
