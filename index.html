@@ -54,7 +54,7 @@
     /* 히어로 배경 82:2004 / 82:2005 / 82:2006 */
     .hero-bg { position: absolute; top: 0; left: 0; right: 0; height: 561px; pointer-events: none; z-index: 0; }
     .hero-bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
-    .hero-bg::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,26,45,.3) 0%, rgba(10,26,45,.1) 30%, rgba(10,26,45,.5) 65%, rgba(10,26,45,.85) 85%, #0a1a2d 100%); z-index: 1; }
+    .hero-bg::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(180deg, rgba(10,26,45,.3) 0%, rgba(10,26,45,.1) 30%, rgba(10,26,45,.5) 65%, rgba(10,26,45,.85) 85%, #0a1a2d 100%), linear-gradient(180deg, rgba(10,26,45,.3) 0%, rgba(10,26,45,.1) 30%, rgba(10,26,45,.5) 65%, rgba(10,26,45,.85) 85%, #0a1a2d 100%); z-index: 1; }
     .hero-bg::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 200px; background: linear-gradient(180deg, rgba(10,26,45,.6) 0%, rgba(10,26,45,.2) 50%, rgba(10,26,45,0) 100%); z-index: 1; }
     .page > :not(.hero-bg) { position: relative; z-index: 1; }
 
@@ -82,7 +82,7 @@
     .card { background: var(--card); border: 1px solid var(--card-line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 16px; }
     .card--first { padding: 18px; }
     .card__head { display: flex; align-items: center; gap: 8px; min-height: 22px; }
-    .chip { flex: none; background: var(--yellow); color: #fff; font-family: var(--outfit); font-weight: 700; font-size: 11px; line-height: normal; padding: 4px 8px; border-radius: 6px; white-space: nowrap; }
+    .chip { flex: none; background: var(--yellow); color: #0a1a2d; font-family: var(--outfit); font-weight: 700; font-size: 11px; line-height: normal; padding: 4px 8px; border-radius: 6px; white-space: nowrap; }
     .card__name { flex: 1 1 auto; font-size: 18px; font-weight: 700; line-height: normal; }
     .card__count { flex: none; font-size: 18px; font-weight: 700; line-height: normal; white-space: nowrap; }
     .card__img { position: relative; width: 100%; border-radius: 12px; overflow: hidden; }
@@ -103,6 +103,7 @@
     .heading { display: flex; flex-direction: column; align-items: center; gap: 20px; padding-inline: 20px; text-align: center; }
     .eyebrow { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--yellow); font-size: 15px; font-weight: 700; line-height: normal; white-space: nowrap; }
     .eyebrow::before { content: ""; width: 14px; height: 14px; }
+    .glyph { width: 14px; height: 14px; }
     .heading__title { font-size: 26px; font-weight: 900; line-height: normal; }
 
     .inset { padding-inline: min(20px, 3vw); }
@@ -124,13 +125,12 @@
     .cta__title { font-size: 23px; font-weight: 900; line-height: normal; }
     /* 87:2129 */
     .cta__note { font-family: var(--pretendard); font-size: 15px; line-height: 1.5; color: #fff; }
-    .cta__buttons { width: 100%; padding-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .cta__buttons { width: 100%; padding-top: 16px; display: flex; align-items: center; justify-content: center; }
     .btn { height: 44px; border-radius: 22px; display: flex; align-items: center; justify-content: center; white-space: nowrap; line-height: normal; transition: filter .15s, transform .15s; }
     .btn:hover { filter: brightness(1.08); }
     .btn:active { transform: scale(.97); }
-    .btn--ghost { flex: 0 1 138px; background: var(--brown); color: #fff; font-size: 13px; font-weight: 700; }
-    .btn--primary { flex: 0 1 203px; background: var(--yellow); color: var(--brown); font-size: 14px; font-weight: 800; }
-    @media (max-width: 374px) { .btn--ghost { font-size: 12px; } .btn--primary { font-size: 13px; } }
+    .btn--primary { flex: 0 1 248px; background: var(--yellow); color: var(--brown); font-size: 14px; font-weight: 800; }
+    @media (max-width: 374px) { .btn--primary { font-size: 13px; } }
   </style>
 </head>
 <body>
@@ -189,7 +189,7 @@
       <div class="heading">
         <p class="eyebrow">참여 방법</p>
         <h2 class="heading__title">기간 내 매치 진행하면<br>이벤트 자동 응모</h2>
-        <p class="eyebrow">세부 내용</p>
+        <span class="glyph" aria-hidden="true"></span>
       </div>
 
       <div class="inset">
@@ -215,8 +215,8 @@
               <li>STAGE별 중복 당첨은 없어요.</li>
               <li>모든 선물은 FREE 사이즈예요.</li>
               <li>당첨 결과는 당첨자에게 개별 안내해요.</li>
-              <li>이벤트 소식을 받아보려면 [마이페이지]-[설정]에서 푸시를 켜주세요.</li>
               <li>당첨 안내 후 정해진 기간 내에 배송지를 제출해 주세요. 제출 기간이 지나면 당첨이 취소돼요.</li>
+              <li>이벤트 소식을 받아보려면 [마이페이지]-[설정]에서 푸시를 켜주세요.</li>
             </ul>
           </div>
         </div>
@@ -231,8 +231,7 @@
         <h2 class="cta__title">내가 원할 때,<br>원하는 구장에서<br>만드는 나만의 수입</h2>
         <p class="cta__note">매치는 일주일 전부터 하루 전까지 추가돼요.<br>지금 원하는 일정이 없어도 매치가 더 열릴 수 있어요!</p>
         <div class="cta__buttons">
-          <a class="btn btn--ghost" href="https://staging.plabfootball.com" target="_blank" rel="noopener">플랩풋볼 바로가기</a>
-          <a class="btn btn--primary" href="https://abr.ge/@plabmanager/airpage" target="_blank" rel="noopener">↗ 연휴 매치 잡으러 가기</a>
+          <a class="btn btn--primary" href="https://abr.ge/@plabmanager/airpage" target="_blank" rel="noopener">↗ 연휴 매치 선택하러 가기</a>
         </div>
       </div>
     </section>
