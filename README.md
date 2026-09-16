@@ -29,5 +29,5 @@ Figma `추석원정대_FINAL`(CVogee0nC4LpZLpK0xQM4S, node 82:2002) 기준으로
 | `chevrons-down.svg`, `dot.svg`, `line-cap.svg`, `line-dash.png` | 아이콘·구분선 | — |
 
 ## 링크
-- 플랩풋볼 바로가기 → `https://www.plabfootball.com/`
-- 연휴 매치 잡으러 가기 → `https://plabmanager.onelink.me/FhFk/pxnzldrc` (플랩매니저 앱 원링크)
+- 플랩풋볼 바로가기 → `https://staging.plabfootball.com` (스테이징 주소)
+- 연휴 매치 잡으러 가기 → `https://abr.ge/@plabmanager/airpage`
