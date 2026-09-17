@@ -15,6 +15,7 @@
 var LOG_SHEET = '조회 로그';
 var SUMMARY_SHEET = '요약';
 var DASHBOARD_SHEET = '일별 대시보드';
+var EXCLUDED_SHEET = '제외된 기록';
 var DASHBOARD_START = '2026-09-17'; // 일별 표 시작일 (시트의 B2 칸에서도 바꿀 수 있음)
 var DASHBOARD_DAYS = 30;            // 일별 표에 보여줄 일수 (바꾸면 setupDashboard 다시 실행)
 var HEADERS = ['기록 시각', '방문자 ID', '기기', '앱 내 브라우저', '유입 경로', 'utm_source', 'utm_medium', 'utm_campaign', '페이지'];
@@ -269,6 +270,62 @@ function setupDashboard() {
   ss.setActiveSheet(sh);
 }
 
+/**
+ * 테스트 기록을 "조회 로그"에서 빼서 "제외된 기록" 탭으로 옮김 (삭제하지 않음)
+ * - utm_source가 claude-check / test 인 기록, 방문자 ID가 claude-test 인 기록
+ * - 실행 시점까지 쌓인 알림톡 링크 기록 (utm_source=kakao & utm_medium=alimtalk)
+ * ⚠️ 알림톡 발송 전에만 실행하세요. 발송 후에 실행하면 실제 알림톡 조회도 옮겨집니다.
+ */
+function excludeTestRows() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var log = getLogSheet_();
+  var lock = LockService.getScriptLock(); // doPost와 같은 잠금 → 옮기는 중 들어온 기록이 섞이지 않음
+  lock.waitLock(30000);
+  try {
+    var last = log.getLastRow();
+    if (last < 2) { Logger.log('조회 로그가 비어 있어요.'); return; }
+
+    var now = new Date();
+    var values = log.getRange(2, 1, last - 1, HEADERS.length).getValues();
+    var targets = []; // { rowNumber, row, reason }
+    values.forEach(function (row, i) {
+      var visitorId = String(row[1]).trim();
+      var source = String(row[5]).trim().toLowerCase();
+      var medium = String(row[6]).trim().toLowerCase();
+      var reason = '';
+      if (visitorId === 'claude-test' || source === 'test') reason = '연결 테스트';
+      else if (source === 'claude-check') reason = '배포 확인 테스트';
+      else if (source === 'kakao' && medium === 'alimtalk' && isDate_(row[0]) && row[0].getTime() <= now.getTime()) reason = '알림톡 발송 전 링크 테스트';
+      if (reason) targets.push({ rowNumber: i + 2, row: row, reason: reason });
+    });
+
+    if (!targets.length) { Logger.log('옮길 테스트 기록이 없어요.'); return; }
+
+    var excluded = ss.getSheetByName(EXCLUDED_SHEET);
+    if (!excluded) {
+      excluded = ss.insertSheet(EXCLUDED_SHEET);
+      excluded.appendRow(HEADERS.concat(['제외 사유', '제외 시각']));
+      excluded.setFrozenRows(1);
+      excluded.getRange(1, 1, 1, HEADERS.length + 2).setFontWeight('bold');
+      excluded.getRange('A:A').setNumberFormat('yyyy-mm-dd hh:mm:ss');
+      excluded.getRange(1, HEADERS.length + 2, excluded.getMaxRows(), 1).setNumberFormat('yyyy-mm-dd hh:mm:ss');
+    }
+    var copied = targets.map(function (t) {
+      return [t.row[0]].concat(t.row.slice(1).map(clean_), [t.reason, now]);
+    });
+    excluded.getRange(excluded.getLastRow() + 1, 1, copied.length, copied[0].length).setValues(copied);
+
+    // 아래 행부터 지워야 위쪽 행 번호가 밀리지 않음
+    targets.slice().reverse().forEach(function (t) { log.deleteRow(t.rowNumber); });
+
+    var summary = {};
+    targets.forEach(function (t) { summary[t.reason] = (summary[t.reason] || 0) + 1; });
+    Logger.log('총 ' + targets.length + '건을 "' + EXCLUDED_SHEET + '" 탭으로 옮겼어요: ' + JSON.stringify(summary));
+  } finally {
+    lock.releaseLock();
+  }
+}
+
 function addChart_(sheet, type, ranges, row, col, width, height, title, options) {
   var builder = sheet.newChart()
     .setChartType(type)
@@ -280,6 +337,10 @@ function addChart_(sheet, type, ranges, row, col, width, height, title, options)
   ranges.forEach(function (range) { builder.addRange(range); });
   Object.keys(options).forEach(function (key) { builder.setOption(key, options[key]); });
   sheet.insertChart(builder.build());
+}
+
+function isDate_(value) {
+  return Object.prototype.toString.call(value) === '[object Date]' && !isNaN(value.getTime());
 }
 
 function parseDate_(yyyyMmDd) {
