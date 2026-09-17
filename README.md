@@ -44,6 +44,17 @@ Figma `추석원정대_FINAL`(CVogee0nC4LpZLpK0xQM4S, node 82:2002) 기준으로
 4. **배포 → 새 배포 → 유형: 웹 앱**, 실행 사용자: **나**, 액세스 권한: **모든 사용자** → 배포.
 5. 나온 **웹 앱 URL**(`https://script.google.com/macros/s/.../exec`)을 `index.html`의 `VIEW_LOG_URL`에 넣고 push 합니다.
 
+### 유입 채널 구분
+
+| 채널 | 기준 | 링크 |
+|---|---|---|
+| 앱 배너 | utm 없음 (기존 링크) | `https://plabmanager-chuseokevent.vercel.app/` |
+| 알림톡 | `utm_source=kakao` + `utm_medium=alimtalk` | `https://plabmanager-chuseokevent.vercel.app/?utm_source=kakao&utm_medium=alimtalk` |
+| 기타 | 그 외 utm | — |
+
+"요약" 탭에 채널별 조회수·순방문자·비중과 일별 채널 조회수가, "일별 대시보드"에 채널 비중 그래프가 나옵니다.
+utm 없는 주소를 복사해 공유한 조회도 "앱 배너"로 잡히는 점은 감안해서 봐 주세요.
+
 ### 일별 대시보드 탭
 
 `setupDashboard`를 실행하면 "조회 로그" 바로 옆에 "일별 대시보드" 탭이 생깁니다.

@@ -53,22 +53,53 @@ function setup() {
   ss.setSpreadsheetTimeZone('Asia/Seoul');
   getLogSheet_();
 
+  var L = "'" + LOG_SHEET + "'!";
+  var ROWS = L + 'A2:A,"<>"';                        // 실제 기록이 있는 행
+  var APP = L + 'F2:F,""';                           // 앱 배너 = utm 없음
+  var KAKAO = L + 'F2:F,"kakao",' + L + 'G2:G,"alimtalk"'; // 알림톡
+
   var summary = ss.getSheetByName(SUMMARY_SHEET) || ss.insertSheet(SUMMARY_SHEET, 0);
   summary.clear();
   summary.getRange('A1:B2').setValues([
-    ['전체 조회수', "=COUNTA('" + LOG_SHEET + "'!A2:A)"],
-    ['순방문자 수', "=COUNTUNIQUE('" + LOG_SHEET + "'!B2:B)"],
+    ['전체 조회수', '=COUNTA(' + L + 'A2:A)'],
+    ['순방문자 수', '=COUNTUNIQUE(' + L + 'B2:B)'],
   ]);
-  summary.getRange('A4:C4').setValues([['날짜', '조회수', '순방문자']]);
-  summary.getRange('A5').setFormula(
-    "=IFERROR(QUERY('" + LOG_SHEET + "'!A2:A, \"select toDate(A), count(A) where A is not null group by toDate(A) label toDate(A) '', count(A) ''\", 0), \"\")"
+
+  // 유입 채널별 (앱 배너 = utm 없음 / 알림톡 = utm_source=kakao & utm_medium=alimtalk / 기타 = 그 외 utm)
+  summary.getRange('A4:D4').setValues([['유입 채널', '조회수', '순방문자', '비중']]);
+  summary.getRange('A5:D7').setValues([
+    ['앱 배너 (utm 없음)', '=COUNTIFS(' + ROWS + ',' + APP + ')', '=COUNTUNIQUEIFS(' + L + 'B2:B,' + ROWS + ',' + APP + ')', '=IFERROR(B5/$B$1,0)'],
+    ['알림톡', '=COUNTIFS(' + ROWS + ',' + KAKAO + ')', '=COUNTUNIQUEIFS(' + L + 'B2:B,' + ROWS + ',' + KAKAO + ')', '=IFERROR(B6/$B$1,0)'],
+    ['기타 (그 외 utm)', '=B1-B5-B6',
+      '=IFERROR(COUNTUNIQUE(FILTER(' + L + 'B2:B,' + L + 'A2:A<>"",' + L + 'F2:F<>"",NOT((LOWER(' + L + 'F2:F)="kakao")*(LOWER(' + L + 'G2:G)="alimtalk")))),0)',
+      '=IFERROR(B7/$B$1,0)'],
+  ]);
+  summary.getRange('D5:D7').setNumberFormat('0.0%');
+
+  // 일별 (채널별 조회수 포함)
+  summary.getRange('A9:F9').setValues([['날짜', '조회수', '순방문자', '앱 배너', '알림톡', '기타']]);
+  summary.getRange('A10').setFormula(
+    '=IFERROR(QUERY(' + L + 'A2:A, "select toDate(A), count(A) where A is not null group by toDate(A) label toDate(A) \'\', count(A) \'\'", 0), "")'
   );
-  summary.getRange('C5').setFormula(
-    "=IFERROR(BYROW(A5:A, LAMBDA(d, IF(d=\"\", \"\", COUNTUNIQUE(FILTER('" + LOG_SHEET + "'!B2:B, INT('" + LOG_SHEET + "'!A2:A)=d))))), \"\")"
+  var DAY = L + 'A2:A,">="&d,' + L + 'A2:A,"<"&d+1';
+  summary.getRange('C10').setFormula(
+    '=IFERROR(BYROW(A10:A, LAMBDA(d, IF(d="", "", COUNTUNIQUE(FILTER(' + L + 'B2:B, INT(' + L + 'A2:A)=d))))), "")'
   );
+  summary.getRange('D10').setFormula(
+    '=IFERROR(BYROW(A10:A, LAMBDA(d, IF(d="", "", COUNTIFS(' + DAY + ',' + APP + ')))), "")'
+  );
+  summary.getRange('E10').setFormula(
+    '=IFERROR(BYROW(A10:A, LAMBDA(d, IF(d="", "", COUNTIFS(' + DAY + ',' + KAKAO + ')))), "")'
+  );
+  summary.getRange('F10').setFormula(
+    '=IFERROR(BYROW(A10:A, LAMBDA(d, IF(d="", "", COUNTIFS(' + DAY + ') - COUNTIFS(' + DAY + ',' + APP + ') - COUNTIFS(' + DAY + ',' + KAKAO + ')))), "")'
+  );
+
   summary.getRange('A1:A2').setFontWeight('bold');
-  summary.getRange('A4:C4').setFontWeight('bold');
-  summary.getRange('A5:A').setNumberFormat('yyyy-mm-dd');
+  summary.getRange('A4:D4').setFontWeight('bold').setBackground('#F5F7FA');
+  summary.getRange('A9:F9').setFontWeight('bold').setBackground('#F5F7FA');
+  summary.getRange('A10:A').setNumberFormat('yyyy-mm-dd');
+  summary.setColumnWidth(1, 150);
 }
 
 /** "조회 로그" 옆에 일별 대시보드 탭 생성 (다시 실행하면 새로 그림) */
@@ -183,11 +214,13 @@ function setupDashboard() {
     ['기타', '=COUNTIF(' + L + 'C:C,"기타")'],
   ]);
 
-  sh.getRange('N10:O10').setValues([['유입 채널 (utm_source)', '조회수']]).setFontWeight('bold').setBackground(PALE);
-  sh.getRange('N11:O11').setValues([['(utm 없음)', '=COUNTIFS(' + L + 'A2:A,"<>",' + L + 'F2:F,"")']]);
-  sh.getRange('N12').setFormula(
-    '=IFERROR(QUERY(' + L + 'F2:F,"select F, count(F) where F <> \'\' group by F order by count(F) desc limit 7 label F \'\', count(F) \'\'",0),"")'
-  );
+  // 유입 채널: 앱 배너 = utm 없음 / 알림톡 = utm_source=kakao & utm_medium=alimtalk / 기타 = 그 외 utm
+  sh.getRange('N10:O10').setValues([['유입 채널', '조회수']]).setFontWeight('bold').setBackground(PALE);
+  sh.getRange('N11:O13').setValues([
+    ['앱 배너', '=COUNTIFS(' + L + 'A2:A,"<>",' + L + 'F2:F,"")'],
+    ['알림톡', '=COUNTIFS(' + L + 'A2:A,"<>",' + L + 'F2:F,"kakao",' + L + 'G2:G,"alimtalk")'],
+    ['기타', '=COUNTA(' + L + 'A2:A)-O11-O12'],
+  ]);
 
   sh.getRange('N21:O21').setValues([['브라우저', '조회수']]).setFontWeight('bold').setBackground(PALE);
   sh.getRange('N22:O22').setValues([['일반 브라우저', '=COUNTIFS(' + L + 'A2:A,"<>",' + L + 'D2:D,"")']]);
@@ -216,9 +249,10 @@ function setupDashboard() {
     isStacked: true,
     colors: [NAVY, YELLOW, GREY],
   });
-  addChart_(sh, Charts.ChartType.BAR, [sh.getRange('N10:O18')], 24, 8, 490, 320, '유입 채널 (utm_source)', {
-    legend: { position: 'none' },
-    colors: [SUB],
+  addChart_(sh, Charts.ChartType.PIE, [sh.getRange('N10:O13')], 24, 8, 490, 320, '유입 채널 (앱 배너 · 알림톡)', {
+    pieHole: 0.45,
+    colors: [NAVY, YELLOW, GREY],
+    legend: { position: 'right' },
   });
 
   addChart_(sh, Charts.ChartType.AREA, [dates, sh.getRange(HDR, 8, DAYS + 1, 1)], 41, 1, 690, 300, '누적 조회수', {
