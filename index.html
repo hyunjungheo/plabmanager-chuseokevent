@@ -60,9 +60,11 @@
 
     /* 82:2007 */
     .brand { display: flex; flex-direction: column; align-items: center; gap: 6px; height: 88px; white-space: nowrap; line-height: normal; }
-    .brand__eyebrow { font-weight: 700; font-size: 15px; color: var(--sub); }
-    .brand__title { font-weight: 900; font-size: 61px; line-height: 1.1; }
-    .hero-desc { font-size: 15px; line-height: 1.6; color: var(--desc); text-align: center; }
+    .brand__eyebrow { font-weight: 700; font-size: 20px; color: var(--sub); }
+    /* 100:272 — SD 흘림 Black 66px, 웹폰트가 없어 Figma에서 벡터로 내보낸 SVG 사용 */
+    .brand__title { line-height: 0; }
+    .brand__title img { width: 338px; max-width: 100%; height: auto; }
+    .hero-desc { font-size: 15px; font-weight: 600; line-height: 1.6; color: var(--desc); text-align: center; }
     .hero-space { height: 163px; flex: none; }
 
     /* 82:2012 / 82:2020 */
@@ -139,7 +141,7 @@
 
     <header class="brand">
       <p class="brand__eyebrow">2026</p>
-      <h1 class="brand__title">추석 원정대</h1>
+      <h1 class="brand__title"><img src="/assets/title.svg" alt="추석 원정대" width="338" height="64"></h1>
     </header>
     <p class="hero-desc">1년 중 그라운드가 가장 붐비는 추석 연휴,<br>매치 진행하고 플랩이 드리는 선물 받아 가세요!</p>
     <div class="hero-space" aria-hidden="true"></div>
@@ -210,13 +212,13 @@
           <div class="panel__head" style="color:#0a1a2d">참고해 주세요<img src="/assets/dot.svg" alt=""></div>
           <div class="panel__body panel__body--notes">
             <ul class="notes">
-              <li>기간 내 일정 매치 수 이상 진행하면 이벤트에 자동으로 응모됩니다.</li>
               <li>진행 완료된 매치만 집계되며, 취소된 매치는 포함되지 않아요.</li>
-              <li>STAGE별 중복 당첨은 없어요.</li>
-              <li>모든 선물은 FREE 사이즈예요.</li>
-              <li>당첨 결과는 당첨자에게 개별 안내해요.</li>
-              <li>당첨 안내 후 정해진 기간 내에 배송지를 제출해 주세요. 제출 기간이 지나면 당첨이 취소돼요.</li>
-              <li>이벤트 소식을 받아보려면 [마이페이지]-[설정]에서 푸시를 켜주세요.</li>
+              <li>원정 대장·베테랑·대원 간 중복 당첨은 없어요.</li>
+              <li>진행 매치수가 같다면 마지막 진행 매치가 이른 분이 원정 대장으로 선정돼요.</li>
+              <li>모든 선물은 FREE 사이즈입니다.</li>
+              <li>당첨 결과는 당첨자분께 알림톡으로 개별 안내해요.</li>
+              <li>안내 후 정해진 기간 내에 배송지를 제출해 주세요. 제출 기간이 지나면 당첨이 취소돼요.</li>
+              <li>이벤트 소식을 받아보려면 [마이페이지] - [설정]에서 푸시를 켜주세요.</li>
             </ul>
           </div>
         </div>
