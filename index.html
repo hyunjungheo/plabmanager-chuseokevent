@@ -238,5 +238,43 @@
       </div>
     </section>
   </main>
+  <script>
+    // 조회수 기록 — apps-script-views.gs 웹 앱 URL. 비어 있으면 아무것도 보내지 않음.
+    (function () {
+      var VIEW_LOG_URL = '';
+      if (!VIEW_LOG_URL || /^(localhost|127\.)/.test(location.hostname)) return;
+
+      var ua = navigator.userAgent;
+      // 링크 미리보기 수집기·크롤러는 조회수에서 제외
+      if (/bot|crawler|spider|scrap|preview|facebookexternalhit|slackbot|whatsapp/i.test(ua)) return;
+
+      var visitorId = '';
+      try {
+        visitorId = localStorage.getItem('chuseok_vid') || '';
+        if (!visitorId) {
+          visitorId = Math.random().toString(36).slice(2) + Date.now().toString(36);
+          localStorage.setItem('chuseok_vid', visitorId);
+        }
+      } catch (e) {}
+
+      var q = new URLSearchParams(location.search);
+      var inApp = ua.match(/KAKAOTALK|Instagram|FBAN|FBAV|NAVER|DaumApps|Line\//i);
+      var payload = JSON.stringify({
+        type: 'view',
+        visitorId: visitorId,
+        device: /iPhone|iPad|iPod/.test(ua) ? 'iOS' : /Android/.test(ua) ? 'Android' : '기타',
+        inApp: inApp ? inApp[0] : '',
+        referrer: document.referrer,
+        utmSource: q.get('utm_source') || '',
+        utmMedium: q.get('utm_medium') || '',
+        utmCampaign: q.get('utm_campaign') || '',
+        path: location.pathname
+      });
+
+      try {
+        fetch(VIEW_LOG_URL, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: payload });
+      } catch (e) {}
+    })();
+  </script>
 </body>
 </html>
